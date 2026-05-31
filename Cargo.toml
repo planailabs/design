@@ -3,6 +3,18 @@ name = "plan-ai-design"
 version = "0.1.0"
 edition = "2024"
 
+# Declaring an empty [workspace] makes this crate its own workspace root, so it
+# builds standalone and, when nested inside the memvault or mac-mgmt trees,
+# Cargo stops here instead of demanding membership in the surrounding workspace.
+[workspace]
+
+# [patch] only applies from the root of the current build. When built standalone
+# these forks redirect dioxus; when consumed as a path/git dependency of a parent
+# workspace, the parent's [patch] applies and this is ignored. Keep in sync.
+[patch.crates-io]
+dioxus = { git = "https://github.com/mkg20001/dioxus.git", branch = "feat/embed" }
+dioxus-i18n = { git = "https://github.com/mkg20001/dioxus-i18n.git", branch = "feat/dioxus-0.8" }
+
 [dependencies]
 dioxus = "0.8.0-alpha.0"
 # Used by the data_table component for its built-in toolbar copy
