@@ -30,6 +30,7 @@ mod text;
 pub mod theme_toggle;
 mod timeline;
 mod token_reveal;
+mod token_table;
 
 pub use alert::*;
 pub use badge::*;
@@ -48,3 +49,4 @@ pub use text::*;
 pub use theme_toggle::*;
 pub use timeline::*;
 pub use token_reveal::*;
+pub use token_table::*;

@@ -24,3 +24,17 @@ language-picker-label = Sprache
 token-reveal-hint = Jetzt kopieren — es wird nicht erneut angezeigt.
 token-reveal-copy = Kopieren
 token-reveal-copied = Kopiert
+
+# Token-Tabelle
+token-col-label = Bezeichnung
+token-col-kind = Art
+token-col-status = Status
+token-col-created = Erstellt
+token-col-expires = Läuft ab
+token-col-actions = Aktionen
+token-status-active = Aktiv
+token-status-revoked = Widerrufen
+token-status-expired = Abgelaufen
+token-revoke = Widerrufen
+token-empty = Keine Tokens
+token-expires-never = Nie
