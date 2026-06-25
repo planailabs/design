@@ -18,6 +18,9 @@ pub struct TokenRow {
     /// Scope, e.g. "admin", "org: Acme", "cluster: edge-1" (shown only when
     /// the table's `show_scope` is set).
     pub scope: Option<String>,
+    /// Optional link target for the scope (a plain path, e.g. "/webspaces/ID").
+    /// When set, the scope renders as a link to the scoped resource.
+    pub scope_href: Option<String>,
     pub revoked: bool,
     /// Past its expiry. Shown as a distinct status and suppresses revoke.
     pub expired: bool,
@@ -76,7 +79,11 @@ pub fn TokenTable(
                                 }
                                 if show_scope {
                                     TdMuted {
-                                        {row.scope.clone().unwrap_or_else(|| t!("token-scope-global"))}
+                                        match (&row.scope, &row.scope_href) {
+                                            (Some(s), Some(href)) => rsx! { a { class: "link", href: "{href}", "{s}" } },
+                                            (Some(s), None) => rsx! { "{s}" },
+                                            (None, _) => rsx! { {t!("token-scope-global")} },
+                                        }
                                     }
                                 }
                                 Td {
