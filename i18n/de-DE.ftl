@@ -38,3 +38,16 @@ token-status-expired = Abgelaufen
 token-revoke = Widerrufen
 token-empty = Keine Tokens
 token-expires-never = Nie
+token-col-scope = Geltungsbereich
+token-scope-global = Global
+
+# Token-Erstellungsformular
+token-create = Token erstellen
+token-create-label = Bezeichnung
+token-expiry-never = Läuft nie ab
+token-expiry-1h = Läuft in 1 Stunde ab
+token-expiry-24h = Läuft in 24 Stunden ab
+token-expiry-7d = Läuft in 7 Tagen ab
+token-expiry-30d = Läuft in 30 Tagen ab
+token-expiry-90d = Läuft in 90 Tagen ab
+token-expiry-1y = Läuft in 1 Jahr ab

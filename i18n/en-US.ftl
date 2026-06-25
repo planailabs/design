@@ -39,3 +39,16 @@ token-status-expired = Expired
 token-revoke = Revoke
 token-empty = No tokens
 token-expires-never = Never
+token-col-scope = Scope
+token-scope-global = Global
+
+# Token create form
+token-create = Create token
+token-create-label = Label
+token-expiry-never = Never expires
+token-expiry-1h = Expires in 1 hour
+token-expiry-24h = Expires in 24 hours
+token-expiry-7d = Expires in 7 days
+token-expiry-30d = Expires in 30 days
+token-expiry-90d = Expires in 90 days
+token-expiry-1y = Expires in 1 year

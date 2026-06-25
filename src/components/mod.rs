@@ -29,6 +29,7 @@ mod session;
 mod text;
 pub mod theme_toggle;
 mod timeline;
+mod token_create_form;
 mod token_reveal;
 mod token_table;
 
@@ -48,5 +49,6 @@ pub use session::*;
 pub use text::*;
 pub use theme_toggle::*;
 pub use timeline::*;
+pub use token_create_form::*;
 pub use token_reveal::*;
 pub use token_table::*;
