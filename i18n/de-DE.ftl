@@ -19,3 +19,8 @@ theme-dark = Dunkles Design aktiv. Klicken für Systemdesign
 
 # Sprachauswahl
 language-picker-label = Sprache
+
+# Token-Anzeige (einmalige Geheimnis-Anzeige)
+token-reveal-hint = Jetzt kopieren — es wird nicht erneut angezeigt.
+token-reveal-copy = Kopieren
+token-reveal-copied = Kopiert

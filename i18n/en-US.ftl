@@ -20,3 +20,8 @@ theme-dark = Using dark mode. Click for system theme
 
 # Language picker
 language-picker-label = Language
+
+# Token reveal (one-time secret display)
+token-reveal-hint = Copy this now — it won't be shown again.
+token-reveal-copy = Copy
+token-reveal-copied = Copied

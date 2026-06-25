@@ -29,6 +29,7 @@ mod session;
 mod text;
 pub mod theme_toggle;
 mod timeline;
+mod token_reveal;
 
 pub use alert::*;
 pub use badge::*;
@@ -46,3 +47,4 @@ pub use session::*;
 pub use text::*;
 pub use theme_toggle::*;
 pub use timeline::*;
+pub use token_reveal::*;
