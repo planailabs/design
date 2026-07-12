@@ -7,6 +7,9 @@ table-showing = Zeige { $shown } von { $total }
 table-per-page-20 = 20 pro Seite
 table-per-page-50 = 50 pro Seite
 table-per-page-100 = 100 pro Seite
+table-page = Seite { $page } von { $pages }
+table-prev = Zurück
+table-next = Weiter
 
 # Dash component
 dash = -

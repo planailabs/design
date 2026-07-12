@@ -8,6 +8,9 @@ table-showing = Showing { $shown } of { $total }
 table-per-page-20 = 20 per page
 table-per-page-50 = 50 per page
 table-per-page-100 = 100 per page
+table-page = Page { $page } of { $pages }
+table-prev = Prev
+table-next = Next
 
 # Dash component
 dash = -

@@ -5,13 +5,14 @@
 //! and rows in as Element slots.
 //!
 //! ```ignore
+//! let (start, shown) = page_window(*page.read(), limit_val, filtered_count);
 //! DataTable {
-//!     search, limit, total, filtered: filtered_count, shown,
+//!     search, limit, page, total, filtered: filtered_count, shown,
 //!     headers: rsx! {
 //!         SortableTh { label: t!("name"), sort_key: "name".to_string(), sort }
 //!     },
 //!     body: rsx! {
-//!         for row in filtered.read().iter().take(limit_val) {
+//!         for row in filtered.read().iter().skip(start).take(limit_val) {
 //!             tr { key: "{row.id}",
 //!                 Td { Link { to: ..., class: "link", "{row.name}" } }
 //!             }
@@ -23,11 +24,24 @@
 use dioxus::prelude::*;
 use dioxus_i18n::t;
 
+use super::button::{Button, ButtonSize, ButtonVariant};
 use super::card::Card;
 
 /// Sort state shared between a list page's signal and `SortableTh`.
 /// (column key, ascending) — empty key means unsorted.
 pub type SortState = (String, bool);
+
+/// Clamped `(start, shown)` window for the current page. Pages slice
+/// their filtered rows with `.skip(start).take(limit)`. Clamping keeps
+/// the window valid when filtering shrinks the row set below the
+/// stored page index (the signal itself is only reset on search/limit
+/// changes, never during render).
+pub fn page_window(page: usize, limit: usize, filtered: usize) -> (usize, usize) {
+    let limit = limit.max(1);
+    let last = filtered.saturating_sub(1) / limit;
+    let start = page.min(last) * limit;
+    (start, filtered.saturating_sub(start).min(limit))
+}
 
 // ── DataTable shell ────────────────────────────────────────────────
 
@@ -35,6 +49,7 @@ pub type SortState = (String, bool);
 pub fn DataTable(
     search: Signal<String>,
     limit: Signal<usize>,
+    page: Signal<usize>,
     total: usize,
     filtered: usize,
     shown: usize,
@@ -42,7 +57,7 @@ pub fn DataTable(
     body: Element,
 ) -> Element {
     rsx! {
-        TableToolbar { search, limit, total, filtered, shown }
+        TableToolbar { search, limit, page, total, filtered, shown }
         Card {
             // Tables hold their natural width via column content; on
             // narrow viewports we let the user scroll horizontally
@@ -94,16 +109,22 @@ pub fn SortableTh(label: String, sort_key: String, sort: Signal<SortState>) -> E
     }
 }
 
-// ── Toolbar (search + page-size + counts) ──────────────────────────
+// ── Toolbar (search + page-size + counts + pager) ──────────────────
 
 #[component]
 pub fn TableToolbar(
     search: Signal<String>,
     limit: Signal<usize>,
+    page: Signal<usize>,
     total: usize,
     filtered: usize,
     shown: usize,
 ) -> Element {
+    let limit_val = (*limit.read()).max(1);
+    let pages = filtered.div_ceil(limit_val).max(1);
+    // Same clamping as `page_window` — the signal may point past the
+    // last page after the row set shrinks.
+    let cur = (*page.read()).min(pages - 1);
     rsx! {
         // Wraps to two rows below `sm` so the search box doesn't shove
         // the row counter and page-size dropdown off the right edge.
@@ -115,7 +136,10 @@ pub fn TableToolbar(
                     r#type: "text",
                     placeholder: t!("search-placeholder"),
                     value: "{search}",
-                    oninput: move |evt| search.set(evt.value()),
+                    oninput: move |evt| {
+                        search.set(evt.value());
+                        page.set(0);
+                    },
                 }
                 svg {
                     class: "absolute left-2.5 top-1/2 -translate-y-1/2 h-3.5 w-3.5 text-fg-faint",
@@ -139,11 +163,31 @@ pub fn TableToolbar(
                     onchange: move |evt| {
                         if let Ok(n) = evt.value().parse::<usize>() {
                             limit.set(n);
+                            page.set(0);
                         }
                     },
                     option { value: "20", {t!("table-per-page-20")} }
                     option { value: "50", {t!("table-per-page-50")} }
                     option { value: "100", {t!("table-per-page-100")} }
+                }
+                if pages > 1 {
+                    div { class: "flex items-center gap-2",
+                        Button {
+                            variant: ButtonVariant::Ghost,
+                            size: ButtonSize::Xs,
+                            disabled: cur == 0,
+                            onclick: move |_| page.set(cur.saturating_sub(1)),
+                            {t!("table-prev")}
+                        }
+                        span { class: "whitespace-nowrap", {t!("table-page", page: cur + 1, pages: pages)} }
+                        Button {
+                            variant: ButtonVariant::Ghost,
+                            size: ButtonSize::Xs,
+                            disabled: cur + 1 >= pages,
+                            onclick: move |_| page.set(cur + 1),
+                            {t!("table-next")}
+                        }
+                    }
                 }
             }
         }
