@@ -9,7 +9,8 @@ a button, card, pill, etc., update this crate first; consumers (currently
 
 - `src/components/` — Dioxus components (Alert, Badge, Button, Card,
   Sparkline / Bars, ActivityFeed, FormField, PageHero, PageHeader,
-  Pill / Dot, ActiveSessionCard, StageTimeline, Kicker / Mono /
+  Pill / Dot, ActiveSessionCard, StageTimeline, TeamSwitcher (+ team
+  selection context), Kicker / Mono /
   StatBlock, DataTable / Td / Th / SortableTh / TableToolbar / Dash, …)
 - `assets/input.css` — single Tailwind source of truth: tokens
   (`--c-bg`, `--c-fg-muted`, `--c-brand-*`, …) under `:root` and

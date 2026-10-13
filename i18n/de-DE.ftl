@@ -21,6 +21,7 @@ theme-light = Helles Design aktiv. Klicken für dunkles Design
 theme-dark = Dunkles Design aktiv. Klicken für Systemdesign
 
 # Sprachauswahl
+team-switcher-label = Team
 language-picker-label = Sprache
 
 # Token-Anzeige (einmalige Geheimnis-Anzeige)

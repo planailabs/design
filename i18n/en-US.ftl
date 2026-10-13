@@ -22,6 +22,7 @@ theme-light = Using light mode. Click for dark mode
 theme-dark = Using dark mode. Click for system theme
 
 # Language picker
+team-switcher-label = Team
 language-picker-label = Language
 
 # Token reveal (one-time secret display)
